@@ -1,4 +1,4 @@
-package com.cinemaapp.cinemaapp;
+package com.cinemaapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
