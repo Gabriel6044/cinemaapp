@@ -1,9 +1,10 @@
 package com.cinemaapp.models;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+//import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
+@Entity
 public class Filme implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -11,11 +12,11 @@ public class Filme implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long codigo;
-    @NotEmpty
+//    @NotEmpty
     private String nome;
-    @NotEmpty
+//    @NotEmpty
     private String dataInicio;
-    @NotEmpty
+//    @NotEmpty
     private String dataTermino;
     @OneToMany
     private List<Pessoa> pessoas;
