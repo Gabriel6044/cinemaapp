@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  mobiage-db:
+    image: postgres:11.16-alpine
+    container_name: cinema-db
+    restart: always
+    ports:
+      - "9180:5432"
+    environment:
+      POSTGRES_USER: "cinema"
+      POSTGRES_DB: "cinema"
+      POSTGRES_PASSWORD: "123456"
+

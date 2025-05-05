@@ -13,7 +13,6 @@ public class Pessoa {
     @Id
     private String rg;
 
-
     public String getNomePessoa() {return nomePessoa;}
     public void setNomePessoa(String nomePessoa) {this.nomePessoa = nomePessoa;}
     public String getRg() {return rg;}
