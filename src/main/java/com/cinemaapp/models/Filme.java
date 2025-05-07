@@ -1,10 +1,17 @@
 package com.cinemaapp.models;
 import jakarta.persistence.*;
-//import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import jakarta.validation.constraints.NotEmpty;
+import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Filme implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -12,26 +19,18 @@ public class Filme implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long codigo;
-//    @NotEmpty
+    @NotEmpty
+    @Column(name="nome")
     private String nome;
-//    @NotEmpty
+    @NotEmpty
+    @Column(name="data_inicio")
     private String dataInicio;
-//    @NotEmpty
+    @NotEmpty
+    @Column(name="data_termino")
     private String dataTermino;
-    @OneToMany
-    private List<Pessoa> pessoas;
 
-
-
-    public long getCodigo() {return codigo;}
-    public void setCodigo(long codigo) {this.codigo = codigo;}
-    public String getNome() {return nome;}
-    public void setNome(String nome) {this.nome = nome;}
-    public String getDataInicio() {return dataInicio;}
-    public void setDataInicio(String dataInicio) {this.dataInicio = dataInicio;}
-    public String getDataTermino() {return dataTermino;}
-    public void setDataTermino(String dataTermino) {this.dataTermino = dataTermino;}
-    public List<Pessoa> getPessoas() {return pessoas;}
-    public void setPessoas(List<Pessoa> pessoas) {this.pessoas = pessoas;}
-
+    @Max(value = 52)
+    @ElementCollection
+    @CollectionTable(name="filme_assentos_ocupados", joinColumns=@JoinColumn(name="filme_codigo"))
+    private List<Integer> assentosOcupados;
 }

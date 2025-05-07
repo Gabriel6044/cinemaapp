@@ -22,7 +22,7 @@
         <p>Data de término: <span th:text="${filme.dataTermino}"></span></p>
     </div>
 
-<!--    <h5 style="color: red"><th:block th:include="mensagemValidacao"></th:block></h5>-->
+    <h5 style="color: red"><th:block th:include="mensagemValidacao"></th:block></h5>
 
     <form method="post" th:object="${pessoa}">
         <div class="row">
@@ -46,7 +46,7 @@
 <div class="container" th:each="pessoa : ${pessoas}">
     <div class="row">
         <div class="input-field col s6">
-    <p><span th:text="${pessoa.nome}"></span></p>
+    <p><span th:text="${pessoa.nomePessoa}"></span></p>
     </div>
         <div class="input-field col s3">
     <p><span th:text="${pessoa.rg}"></span></p>

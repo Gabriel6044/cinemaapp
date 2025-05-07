@@ -11,11 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+<div class="container">
 <h1>Lista de Filmes</h1>
 <h3><a href="/filmes" class="waves-effect waves-light btn"><i
         class="material-icons left">format_list_bulleted</i>Lista de filmes</a></h3>
 <h3><a href="/cadastrarFilme" class="waves-effect waves-light btn"><i
         class="material-icons left">add_circle_outline</i>Cadastrar Filme</a></h3>
+    </div>
 
 <table class="container">
     <thead>
@@ -27,6 +29,9 @@
 
     </thead>
     <tbody>
+
+
+
     <tr th:each="filme : ${filmes}">
         <td><a th:href="${(#mvc.url('FC#detalhesFilme').arg(0, filme.codigo)).build()}"><span
                 th:text="${filme.nome}"></span></a></td>
