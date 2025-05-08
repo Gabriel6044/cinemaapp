@@ -1,9 +1,9 @@
 package com.cinemaapp.services;
 
 import com.cinemaapp.models.Filme;
+import com.cinemaapp.models.Sessao;
 import com.cinemaapp.repository.FilmeRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,16 +36,13 @@ public class FilmeService {
         return this.save(filme);
     }
 
-    public Filme delete(Filme filme) {
+    public void delete(Filme filme) {
         this.filmeRepository.delete(filme);
-        return filme;
     }
 
-    public Filme delete(Filme filme, BindingResult result) {
-//        if (!filme.getAssentosOcupados().isEmpty()) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Este filme não pode ser deletado pois possui assentos reservados");
-//        } else {
-            return this.delete(filme);
-//        }
+    public Filme newSessao(long codigo, Sessao sessao) {
+        Filme filme = this.findByCodigo(codigo);
+        filme.addSessao(sessao);
+        return this.filmeRepository.save(filme);
     }
 }
