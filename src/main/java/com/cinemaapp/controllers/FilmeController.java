@@ -1,7 +1,9 @@
 package com.cinemaapp.controllers;
 
+import com.cinemaapp.models.Assento;
 import com.cinemaapp.models.Filme;
 import com.cinemaapp.models.Sessao;
+import com.cinemaapp.services.AssentoService;
 import com.cinemaapp.services.FilmeService;
 import com.cinemaapp.services.SessaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,13 @@ public class FilmeController {
 
     private final FilmeService filmeService;
     private final SessaoService sessaoService;
+    private final AssentoService assentoService;
 
     @Autowired
-    public FilmeController(FilmeService filmeService, SessaoService sessaoService) {
+    public FilmeController(FilmeService filmeService, SessaoService sessaoService, AssentoService assentoService) {
         this.filmeService = filmeService;
         this.sessaoService = sessaoService;
+        this.assentoService = assentoService;
     }
 
     @PostMapping
@@ -82,6 +86,23 @@ public class FilmeController {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         sessaoService.delete(sessao);
         return ResponseEntity.ok("Sessão deletada com sucesso");
+    }
 
+    @PostMapping(value = "/{codigo}/sessao/{idSessao}/assento")
+    public ResponseEntity<Sessao> saveNewAssento(@PathVariable("idSessao") long idSessao, @RequestBody @Valid Assento assento) {
+        return ResponseEntity.ok(this.sessaoService.newAssento(idSessao, assento));
+    }
+
+    @DeleteMapping(value = "/{codigo}/sessao/{idSessao}/assento/{numeroAssento}/delete")
+    public ResponseEntity<String> deleteAssento(@PathVariable("numeroAssento") long numeroAssento) {
+        Assento assento = assentoService.findByNumeroAssento(numeroAssento);
+        assentoService.delete(assento);
+        return ResponseEntity.ok("Assento deletado com sucesso");
+    }
+
+    @GetMapping(value = "/{codigo}/sessao/{idSessao}/assento/{numeroAssento}")
+    public ResponseEntity getAssentoByCode(@PathVariable("numeroAssento") long numeroAssento) {
+        Assento assento = assentoService.findByNumeroAssento(numeroAssento);
+        return ResponseEntity.ok(assento);
     }
 }

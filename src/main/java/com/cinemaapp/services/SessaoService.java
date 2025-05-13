@@ -1,5 +1,6 @@
 package com.cinemaapp.services;
 
+import com.cinemaapp.models.Assento;
 import com.cinemaapp.models.Sessao;
 import com.cinemaapp.repository.SessaoRepository;
 import org.springframework.http.HttpStatus;
@@ -35,16 +36,33 @@ public class SessaoService {
         this.sessaoSave(sessao);
     }
 
-    public void sessaoDelete(Sessao sessao) {
-        this.sessaoRepository.delete(sessao);
-    }
 
     public void delete(Sessao sessao) {
-        if (!sessao.getAssentosOcupados().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esta sessão não pode ser deletada pois possui assentos reservados");
-        } else {
-            this.sessaoDelete(sessao);
-        }
+            this.sessaoRepository.delete(sessao);
+    }
+
+    public Sessao newAssento(long idSessao, Assento assento) {
+        Sessao sessao = this.findByidSessao(idSessao);
+        sessao.addAssentoOcupado(assento);
+        return this.sessaoRepository.save(sessao);
     }
 }
+
+//}
+
+//public Sessao deleteAssento(long idSessao, Assento assento) {
+//    Sessao sessao = this.findByidSessao(idSessao);
+//    if (sessao.getAssentosOcupados().isEmpty()) {
+//        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não há assentos ocupados");
+//    } else {
+//        sessao.removeAssentoOcupado(assento);
+//        sessao.addAssentoDisponivel(assento);
+//        return this.sessaoRepository.save(sessao);
+//    }
+//}
+//
+
+
+
+
 
