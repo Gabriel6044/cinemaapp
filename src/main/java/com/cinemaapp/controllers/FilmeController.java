@@ -89,14 +89,15 @@ public class FilmeController {
     }
 
     @PostMapping(value = "/{codigo}/sessao/{idSessao}/assento")
-    public ResponseEntity<Sessao> saveNewAssento(@PathVariable("idSessao") long idSessao, @RequestBody @Valid Assento assento) {
+    public ResponseEntity<Sessao> saveNewAssento(@PathVariable("idSessao") long idSessao, @RequestBody @Valid Assento assento, @PathVariable("idSessao") long idAssento) {
         return ResponseEntity.ok(this.sessaoService.newAssento(idSessao, assento));
     }
 
     @DeleteMapping(value = "/{codigo}/sessao/{idSessao}/assento/{numeroAssento}/delete")
-    public ResponseEntity<String> deleteAssento(@PathVariable("numeroAssento") long numeroAssento) {
-        Assento assento = assentoService.findByNumeroAssento(numeroAssento);
-        assentoService.delete(assento);
+    public ResponseEntity<String> deleteAssento(@PathVariable("numeroAssento") long numeroAssento, @PathVariable("idSessao") long idSessao) {
+        Assento assento = assentoService.findByIdAssento(numeroAssento);
+        Sessao sessao = sessaoService.findByidSessao(idSessao);
+        assentoService.delete(assento, sessao);
         return ResponseEntity.ok("Assento deletado com sucesso");
     }
 

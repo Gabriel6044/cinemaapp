@@ -1,5 +1,6 @@
 package com.cinemaapp.services;
 
+import com.cinemaapp.models.Sessao;
 import com.cinemaapp.models.Assento;
 import com.cinemaapp.repository.AssentoRepository;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,10 @@ public class AssentoService {
 
     public AssentoService(AssentoRepository assentoRepository) {
         this.assentoRepository = assentoRepository;
+    }
+
+    public Assento findByIdAssento(long idAssento) {
+        return this.assentoRepository.findByIdAssento(idAssento).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
     }
 
     public Assento findByNumeroAssento(long numeroAssento) {
@@ -38,11 +43,12 @@ public class AssentoService {
         this.assentoRepository.delete(assento);
     }
 
-    public void delete(Assento assento) {
+    public void delete(Assento assento, Sessao sessao) {
 //        if (!sessao.getAssentosOcupados().isEmpty()) {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esta sessão não pode ser deletada pois possui assentos reservados");
 //        } else {
-            this.assentoDelete(assento);
+        sessao.addAssentoDisponivel(assento.getNumeroAssento());
+        this.assentoDelete(assento);
 //        }
     }
 }

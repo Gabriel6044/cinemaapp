@@ -38,16 +38,18 @@ public class SessaoService {
 
 
     public void delete(Sessao sessao) {
-            this.sessaoRepository.delete(sessao);
+        this.sessaoRepository.delete(sessao);
     }
 
     public Sessao newAssento(long idSessao, Assento assento) {
         Sessao sessao = this.findByidSessao(idSessao);
         sessao.addAssentoOcupado(assento);
+        sessao.removeAssentoDisponivel(assento.getNumeroAssento());
+        assento.setIdAssento(assento.getNumeroAssento());
+
         return this.sessaoRepository.save(sessao);
     }
 }
-
 //}
 
 //public Sessao deleteAssento(long idSessao, Assento assento) {

@@ -1,6 +1,8 @@
 package com.cinemaapp.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -17,12 +19,19 @@ public class Assento implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Getter
+    @Setter
+    @Id
+    private int idAssento;
 
 //    @NotEmpty
-    @Id
+    @Getter
     private int numeroAssento;
+
 //    @NotEmpty
+    @Getter
     private int fileira;
+
 
     public void setFileira(int fileira) {
         if (fileira < 1 || fileira > 4) {
@@ -31,18 +40,11 @@ public class Assento implements Serializable {
         this.fileira = fileira;
     }
 
-    public int getFileira() {
-        return fileira;
-    }
-
-    public int getNumeroAssento() {
-        return numeroAssento;
-    }
-
     public void setNumeroAssento(int numeroAssento) {
         if (numeroAssento < 1 || numeroAssento > 52) {
             throw new IllegalArgumentException("Número do assento deve estar entre 1 e 52");
         }
         this.numeroAssento = numeroAssento;
     }
+
 }
