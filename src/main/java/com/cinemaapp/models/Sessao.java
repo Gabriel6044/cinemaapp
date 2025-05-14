@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import java.io.Serial;
@@ -27,14 +26,35 @@ public class Sessao implements Serializable {
     @NotEmpty
     private String horarioTermino;
 
-    @Max(value = 52)
+    @Max(value = 32)
     @CollectionTable(name = "filme_assentos_disponiveis", joinColumns = @JoinColumn(name = "filme_codigo"))
-    private ArrayList<Integer> assentosDisponiveis = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52));
+    private ArrayList<Integer> assentosDisponiveis = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+            16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32));
 
-    @Max(value = 52)
+    @Max(value = 32)
     @OneToMany(cascade = CascadeType.ALL)
     private List<Assento> assentosOcupados;
 
+//    public ArrayList<Integer> AssentosDisponiveisTotal() {
+//        for (int i = 0; i <= 60; i++) {
+//            assentosDisponiveis.add(i);
+//        }
+//        return assentosDisponiveis;
+//    }
+
+    public void setHorarioInicio(String horarioInicio) {
+        if (horarioInicio == null || horarioInicio.isEmpty()) {
+            throw new IllegalArgumentException("Horário de início não pode ser nulo ou vazio");
+        }
+        this.horarioInicio = horarioInicio;
+    }
+
+    public void setHorarioTermino(String horarioTermino) {
+        if (horarioTermino == null || horarioTermino.isEmpty()) {
+            throw new IllegalArgumentException("Horário de término não pode ser nulo ou vazio");
+        }
+        this.horarioTermino = horarioTermino;
+    }
 
     public void addAssentoOcupado(Assento assento) {
         if (Objects.isNull(assentosOcupados)) {
@@ -58,7 +78,7 @@ public class Sessao implements Serializable {
             throw new IllegalArgumentException("Assento já disponível");
         }
     }
-    
+
 //    public void removeAssentoLivre() {
 //        assentosDisponiveis.remove();
 //    }

@@ -88,7 +88,7 @@ public class FilmeController {
         return ResponseEntity.ok("Sessão deletada com sucesso");
     }
 
-    @PostMapping(value = "/{codigo}/sessao/{idSessao}/assento")
+    @PostMapping(value = "/{codigo}/sessao/{idSessao}/comprar_assento")
     public ResponseEntity<Sessao> saveNewAssento(@PathVariable("idSessao") long idSessao, @RequestBody @Valid Assento assento, @PathVariable("idSessao") long idAssento) {
         return ResponseEntity.ok(this.sessaoService.newAssento(idSessao, assento));
     }

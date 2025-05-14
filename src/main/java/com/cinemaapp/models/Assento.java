@@ -41,8 +41,8 @@ public class Assento implements Serializable {
     }
 
     public void setNumeroAssento(int numeroAssento) {
-        if (numeroAssento < 1 || numeroAssento > 52) {
-            throw new IllegalArgumentException("Número do assento deve estar entre 1 e 52");
+        if (numeroAssento < 1 || numeroAssento > 32) {
+            throw new IllegalArgumentException("Número do assento deve estar entre 1 e 32");
         }
         this.numeroAssento = numeroAssento;
     }

@@ -45,7 +45,7 @@ public class SessaoService {
         Sessao sessao = this.findByidSessao(idSessao);
         sessao.addAssentoOcupado(assento);
         sessao.removeAssentoDisponivel(assento.getNumeroAssento());
-        assento.setIdAssento(assento.getNumeroAssento());
+        assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira())+String.valueOf(assento.getNumeroAssento())));
 
         return this.sessaoRepository.save(sessao);
     }
