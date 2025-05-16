@@ -33,20 +33,20 @@ public class SessaoController {
     }
 
     @DeleteMapping(value = "/{codigo}/sessao/{idSessao}/delete")
-    public ResponseEntity<String> deleteSessao(@PathVariable("idSessao") long idSessao) {
+    public ResponseEntity<String> deleteSessao(@PathVariable("idSessao") long idSessao, @PathVariable String codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         sessaoService.delete(sessao);
         return ResponseEntity.ok("Sessão deletada com sucesso");
     }
 
     @GetMapping(value = "/{codigo}/sessao/{idSessao}")
-    public ResponseEntity getSessaoByCode(@PathVariable("idSessao") long idSessao) {
+    public ResponseEntity getSessaoByCode(@PathVariable("idSessao") long idSessao, @PathVariable String codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         return ResponseEntity.ok(sessao);
     }
 
     @PatchMapping(value = "/{codigo}/sessao/{idSessao}")
-    public ResponseEntity patchSessaoByCode(@PathVariable("idSessao") long idSessao, @RequestBody Map<String, Object> updates, BindingResult result) {
+    public ResponseEntity patchSessaoByCode(@PathVariable("idSessao") long idSessao, @RequestBody Map<String, Object> updates, BindingResult result, @PathVariable String codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         updates.forEach((key, value) -> {
             switch (key) {
