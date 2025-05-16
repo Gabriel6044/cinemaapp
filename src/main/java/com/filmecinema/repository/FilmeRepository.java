@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface FilmeRepository extends JpaRepository<Filme, String> {
+public interface FilmeRepository extends JpaRepository<Filme, Long> {
     Optional<Filme> findByCodigo(long codigo);
 }

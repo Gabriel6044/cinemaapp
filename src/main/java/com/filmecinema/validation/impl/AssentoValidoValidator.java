@@ -1,6 +1,7 @@
-package com.filmecinema.validation;
+package com.filmecinema.validation.impl;
 
 import com.filmecinema.models.Assento;
+import com.filmecinema.validation.AssentoValido;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -8,7 +9,7 @@ public class AssentoValidoValidator implements ConstraintValidator<AssentoValido
 
     @Override
     public boolean isValid(Assento assento, ConstraintValidatorContext context) {
-        if (assento == null) return true; // evita erro de null pointer
+        if (assento == null) return true;
 
         int fileira = assento.getFileira();
         int numero = assento.getNumeroAssento();

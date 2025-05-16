@@ -1,5 +1,6 @@
 package com.filmecinema.validation;
 
+import com.filmecinema.validation.impl.AssentoValidoValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
