@@ -1,8 +1,9 @@
-package com.cinemaapp.services;
+package com.filmecinema.services;
 
-import com.cinemaapp.models.Assento;
-import com.cinemaapp.models.Sessao;
-import com.cinemaapp.repository.SessaoRepository;
+import com.filmecinema.models.Assento;
+import com.filmecinema.models.Sessao;
+import com.filmecinema.repository.SessaoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -17,54 +18,42 @@ public class SessaoService {
         this.sessaoRepository = sessaoRepository;
     }
 
+    @Transactional
     public Sessao findByidSessao(long idSessao) {
-        return this.sessaoRepository.findByIdSessao(idSessao).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sessão não encontrada"));
+        return this.sessaoRepository.findByIdSessao(idSessao).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Sessão não encontrada"));
     }
 
+    @Transactional
     public Iterable<Sessao> findAll() {
         return this.sessaoRepository.findAll();
     }
 
-    public void sessaoSave(Sessao sessao) {
-        this.sessaoRepository.save(sessao);
-    }
-
-    public void save(Sessao sessao, BindingResult result) {
+    @Transactional
+    public Sessao save(Sessao sessao, BindingResult result) {
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao salvar sessão");
         }
-        this.sessaoSave(sessao);
+
+        return this.sessaoRepository.save(sessao);
     }
 
-
+    @Transactional
     public void delete(Sessao sessao) {
         this.sessaoRepository.delete(sessao);
     }
 
+    @Transactional
     public Sessao newAssento(long idSessao, Assento assento) {
         Sessao sessao = this.findByidSessao(idSessao);
         sessao.addAssentoOcupado(assento);
         sessao.removeAssentoDisponivel(assento.getNumeroAssento());
-        assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira())+String.valueOf(assento.getNumeroAssento())));
+        assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira()) + assento.getNumeroAssento()));
 
         return this.sessaoRepository.save(sessao);
     }
+
 }
-//}
-
-//public Sessao deleteAssento(long idSessao, Assento assento) {
-//    Sessao sessao = this.findByidSessao(idSessao);
-//    if (sessao.getAssentosOcupados().isEmpty()) {
-//        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não há assentos ocupados");
-//    } else {
-//        sessao.removeAssentoOcupado(assento);
-//        sessao.addAssentoDisponivel(assento);
-//        return this.sessaoRepository.save(sessao);
-//    }
-//}
-//
-
-
 
 
 

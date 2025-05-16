@@ -1,6 +1,6 @@
-package com.cinemaapp.repository;
+package com.filmecinema.repository;
 
-import com.cinemaapp.models.Assento;
+import com.filmecinema.models.Assento;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

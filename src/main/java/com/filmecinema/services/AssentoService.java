@@ -1,54 +1,44 @@
-package com.cinemaapp.services;
+package com.filmecinema.services;
 
-import com.cinemaapp.models.Sessao;
-import com.cinemaapp.models.Assento;
-import com.cinemaapp.repository.AssentoRepository;
+import com.filmecinema.models.Sessao;
+import com.filmecinema.models.Assento;
+import com.filmecinema.repository.AssentoRepository;
+import com.filmecinema.repository.SessaoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AssentoService {
     private final AssentoRepository assentoRepository;
+    private final SessaoRepository sessaoRepository;
 
-    public AssentoService(AssentoRepository assentoRepository) {
+    public AssentoService(AssentoRepository assentoRepository, SessaoRepository sessaoRepository) {
         this.assentoRepository = assentoRepository;
+        this.sessaoRepository = sessaoRepository;
     }
 
+    @Transactional
     public Assento findByIdAssento(long idAssento) {
         return this.assentoRepository.findByIdAssento(idAssento).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
     }
 
+    @Transactional
     public Assento findByNumeroAssento(long numeroAssento) {
         return this.assentoRepository.findByNumeroAssento(numeroAssento).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
     }
 
+    @Transactional
     public Iterable<Assento> findAll() {
         return this.assentoRepository.findAll();
     }
 
-    public void assentoSave(Assento assento) {
-        this.assentoRepository.save(assento);
-    }
-
-    public void save(Assento assento, BindingResult result) {
-        if (result.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao salvar assento");
-        }
-        this.assentoSave(assento);
-    }
-
-    private void assentoDelete(Assento assento) {
-        this.assentoRepository.delete(assento);
-    }
-
+    @Transactional
     public void delete(Assento assento, Sessao sessao) {
-//        if (!sessao.getAssentosOcupados().isEmpty()) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esta sessão não pode ser deletada pois possui assentos reservados");
-//        } else {
+        sessao.getAssentosOcupados().removeIf(a -> a.getIdAssento() == assento.getIdAssento());
         sessao.addAssentoDisponivel(assento.getNumeroAssento());
-        this.assentoDelete(assento);
-//        }
+        sessaoRepository.save(sessao);
+        this.assentoRepository.delete(assento);
     }
 }

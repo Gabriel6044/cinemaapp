@@ -1,6 +1,6 @@
-package com.cinemaapp.repository;
+package com.filmecinema.repository;
 
-import com.cinemaapp.models.Filme;
+import com.filmecinema.models.Filme;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

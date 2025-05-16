@@ -1,4 +1,4 @@
-package com.cinemaapp;
+package com.filmecinema;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +15,8 @@ public class DataConfiguration {
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:9180/cinema");
-        dataSource.setUsername("cinema");
+        dataSource.setUrl("jdbc:postgresql://localhost:9190/filmecinema");
+        dataSource.setUsername("filmecinema");
         dataSource.setPassword("123456");
         return dataSource;
     }

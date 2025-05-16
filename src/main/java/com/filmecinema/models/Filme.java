@@ -1,4 +1,4 @@
-package com.cinemaapp.models;
+package com.filmecinema.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -24,24 +23,21 @@ public class Filme implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long codigo;
-    @NotEmpty
+
+    @NotEmpty(message = "Nome não pode estar vazio ou nulo")
     @Column(name = "nome")
     private String nome;
-    @NotEmpty
+    @NotEmpty(message = "Data de início não pode estar vazio ou nulo")
     @Column(name = "data_inicio")
     private String dataInicio;
-    @NotEmpty
+    @NotEmpty(message = "Data de término não pode estar vazio ou nulo")
     @Column(name = "data_termino")
     private String dataTermino;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Sessao> sessaoList;
-
+    private List<Sessao> sessaoList = new ArrayList<>();
 
     public void addSessao(Sessao sessao) {
-        if (Objects.isNull(sessaoList)) {
-            sessaoList = new ArrayList<>();
-        }
         sessaoList.add(sessao);
     }
 }

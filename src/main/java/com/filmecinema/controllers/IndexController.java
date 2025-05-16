@@ -1,4 +1,4 @@
-package com.cinemaapp.controllers;
+package com.filmecinema.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +10,5 @@ public class IndexController {
     public String index() {
         return "index";
     }
-
 
 }
