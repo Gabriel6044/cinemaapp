@@ -31,34 +31,47 @@ public class Sessao implements Serializable {
     private String horarioTermino;
 
     @Max(value = 32)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Assento> assentosOcupados = new ArrayList<>();
+    @OneToMany(mappedBy = "sessao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Assento> assentos = new ArrayList<>();
 
-    @ElementCollection
-    @Max(value = 32)
-    @CollectionTable(name = "filme_assentos_disponiveis", joinColumns = @JoinColumn(name = "filme_codigo"))
-    private Set<Integer> assentosDisponiveis = gerarAssentos();
+//    @ElementCollection
+//    @Max(value = 32)
+//    @CollectionTable(name = "filme_assentos_disponiveis", joinColumns = @JoinColumn(name = "filme_codigo"))
+//    private Set<Integer> assentosDisponiveis = gerarAssentos();
 
-    private Set<Integer> gerarAssentos() {
-        return IntStream.rangeClosed(1, 32).boxed().collect(Collectors.toCollection(TreeSet::new));
+//    @PostPersist
+//    public void inicializarAssentos() {
+//        if (assentos.isEmpty()) {
+//            int numero = 1;
+//            for (int fileira = 1; fileira <= 4; fileira++) {
+//                for (int i = 1; i <= 8; i++) {
+//                    Assento assento = new Assento();
+//                    assento.setFileira(fileira);
+//                    assento.setNumero(numero++);
+//                    assento.setDisponivel(true);
+//                    assento.setSessao(getIdSessao());
+//                    assentos.add(assento);
+//                }
+//            }
+//        }
+//
     }
 
-    public void addAssentoOcupado(Assento assento) {
-        Objects.requireNonNull(assento, "Assento não pode ser nulo");
-        assentosOcupados.add(assento);
-    }
 
-    public void removeAssentoDisponivel(int numeroAssento) {
-        if (!assentosDisponiveis.remove(numeroAssento)) {
-            throw new IllegalStateException("Assento já ocupado ou inválido");
-        }
-    }
+//    private Set<Integer> gerarAssentos() {
+//        return IntStream.rangeClosed(1, 32).boxed().collect(Collectors.toCollection(TreeSet::new));
+//    }
 
-    public void addAssentoDisponivel(int numeroAssento) {
-        assentosDisponiveis.add(numeroAssento);
-    }
+//    public void addAssentoOcupado(Assento assento) {
+//        Objects.requireNonNull(assento, "Assento não pode ser nulo");
+//        assentos.add(assento);
+//    }
 
-}
+//    public void removeAssentoDisponivel(int numeroAssento) {
+//        if (!assentosDisponiveis.remove(numeroAssento)) {
+//            throw new IllegalStateException("Assento já ocupado ou inválido");
+//        }
+//    }
 
-
-
+//    public void addAssentoDisponivel(int numeroAssento) {
+//        assentosDisponiveis.

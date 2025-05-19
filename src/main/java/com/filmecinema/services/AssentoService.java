@@ -25,8 +25,13 @@ public class AssentoService {
     }
 
     @Transactional
-    public Assento findByNumeroAssento(long numeroAssento) {
-        return this.assentoRepository.findByNumeroAssento(numeroAssento).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
+    public Assento findByNumero(int numero) {
+        return this.assentoRepository.findByNumero(numero).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
+    }
+
+    @Transactional
+    public Assento findByDisponivel(boolean disponivel) {
+        return this.assentoRepository.findByDisponivel(disponivel).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
     }
 
     @Transactional
@@ -36,8 +41,7 @@ public class AssentoService {
 
     @Transactional
     public void delete(Assento assento, Sessao sessao) {
-        sessao.getAssentosOcupados().removeIf(a -> a.getIdAssento() == assento.getIdAssento());
-        sessao.addAssentoDisponivel(assento.getNumeroAssento());
+        assento.setDisponivel(true);
         sessaoRepository.save(sessao);
         this.assentoRepository.delete(assento);
     }

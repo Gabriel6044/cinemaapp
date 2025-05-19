@@ -25,7 +25,7 @@ public class AssentoController {
     }
 
     @PostMapping(value = "/{codigo}/sessao/{idSessao}/comprar_assento")
-    public ResponseEntity<Sessao> saveNewAssento(@PathVariable("idSessao") long idSessao, @RequestBody @Valid Assento assento, @PathVariable String codigo) {
+    public ResponseEntity<Sessao> newAssento(@PathVariable("idSessao") long idSessao, @RequestBody @Valid Assento assento, @PathVariable String codigo) {
         return ResponseEntity.ok(this.sessaoService.newAssento(idSessao, assento));
     }
 
@@ -38,8 +38,8 @@ public class AssentoController {
     }
 
     @GetMapping(value = "/{codigo}/sessao/{idSessao}/assento/{numeroAssento}")
-    public ResponseEntity getAssentoByCode(@PathVariable("numeroAssento") long numeroAssento, @PathVariable String codigo) {
-        Assento assento = assentoService.findByNumeroAssento(numeroAssento);
+    public ResponseEntity getAssentoByCode(@PathVariable("numero") int numero, @PathVariable String codigo) {
+        Assento assento = assentoService.findByNumero(numero);
         return ResponseEntity.ok(assento);
     }
 }

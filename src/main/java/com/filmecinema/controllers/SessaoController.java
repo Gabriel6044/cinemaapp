@@ -28,7 +28,7 @@ public class SessaoController {
 
 
     @PostMapping(value = "/{codigo}/sessao")
-    public ResponseEntity<Filme> saveNewSessao(@PathVariable("codigo") long codigo, @RequestBody @Valid Sessao sessao) {
+    public ResponseEntity<Filme> newSessao(@PathVariable("codigo") long codigo, @RequestBody @Valid Sessao sessao) {
         return ResponseEntity.ok(this.filmeService.newSessao(codigo, sessao));
     }
 

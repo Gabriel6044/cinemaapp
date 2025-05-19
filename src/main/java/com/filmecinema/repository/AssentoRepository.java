@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface AssentoRepository extends JpaRepository<Assento, Long> {
     Optional<Assento> findByIdAssento(long IdAssento);
-    Optional<Assento> findByNumeroAssento(long numeroAssento);
+    Optional<Assento> findByNumero(int numero);
+    Optional<Assento> findByDisponivel(boolean disponivel);
 }

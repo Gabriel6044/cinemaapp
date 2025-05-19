@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class SessaoService {
 
@@ -38,6 +41,8 @@ public class SessaoService {
         return this.sessaoRepository.save(sessao);
     }
 
+
+
     @Transactional
     public void delete(Sessao sessao) {
         this.sessaoRepository.delete(sessao);
@@ -46,9 +51,12 @@ public class SessaoService {
     @Transactional
     public Sessao newAssento(long idSessao, Assento assento) {
         Sessao sessao = this.findByidSessao(idSessao);
-        sessao.addAssentoOcupado(assento);
-        sessao.removeAssentoDisponivel(assento.getNumeroAssento());
-        assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira()) + assento.getNumeroAssento()));
+        if(assento.isDisponivel() == true) {
+            assento.setDisponivel(false);
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assento já reservado");
+        }
 
         return this.sessaoRepository.save(sessao);
     }

@@ -6,7 +6,7 @@ services:
     container_name: filmecinema-db
     restart: always
     ports:
-      - "9190:5432"
+      - "9191:5432"
     environment:
       POSTGRES_USER: "filmecinema"
       POSTGRES_DB: "filmecinema"
