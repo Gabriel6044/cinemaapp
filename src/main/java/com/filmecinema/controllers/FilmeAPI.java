@@ -15,13 +15,13 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/filmes")
-public class FilmeController {
+public class FilmeAPI {
 
     private final FilmeService filmeService;
     private final SessaoService sessaoService;
 
     @Autowired
-    public FilmeController(FilmeService filmeService, SessaoService sessaoService) {
+    public FilmeAPI(FilmeService filmeService, SessaoService sessaoService) {
         this.filmeService = filmeService;
         this.sessaoService = sessaoService;
     }

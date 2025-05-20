@@ -64,16 +64,16 @@ public class FilmeService {
             for (int i = 1; i <= 8; i++) {
                 Assento assento = new Assento();
                 assento.setFileira(fileira);
-                assento.setNumero(numero++);
+                assento.setNumeroAssento(numero++);
                 assento.setDisponivel(true);
-                assento.setSessao(sessao); // 🔁 liga corretamente a sessão
+                assento.setSessao(sessao);
+                assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira()) + assento.getNumeroAssento()));
                 assentos.add(assento);
             }
         }
 
         sessao.setAssentos(assentos);
-        filme.getSessaoList().add(sessao);
-
+        filme.addSessao(sessao);
         return this.filmeRepository.save(filme);
     }
 

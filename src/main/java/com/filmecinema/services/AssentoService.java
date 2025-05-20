@@ -25,8 +25,8 @@ public class AssentoService {
     }
 
     @Transactional
-    public Assento findByNumero(int numero) {
-        return this.assentoRepository.findByNumero(numero).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
+    public Assento findByNumeroAssento(int numeroAssento) {
+        return this.assentoRepository.findByNumeroAssento(numeroAssento).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
     }
 
     @Transactional
@@ -45,4 +45,23 @@ public class AssentoService {
         sessaoRepository.save(sessao);
         this.assentoRepository.delete(assento);
     }
+
+//    @Transactional
+//    public Assento buyAssento(long idSessao, int numeroAssento) {
+//        Sessao sessao = sessaoRepository.findByIdSessao(idSessao)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sessão não encontrada"));
+//
+//        Assento assento = sessao.getAssentos().stream()
+//                .filter(a -> a.getNumeroAssento() == numeroAssento)
+//                .findFirst()
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
+//
+//        if (!assento.isDisponivel()) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assento já reservado");
+//        }
+//
+//        assento.setDisponivel(false);
+//        return this.assentoRepository.save(assento);
+//    }
+
 }

@@ -34,7 +34,7 @@ public class Filme implements Serializable {
     @Column(name = "data_termino")
     private String dataTermino;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sessao> sessaoList = new ArrayList<>();
 
     public void addSessao(Sessao sessao) {

@@ -1,5 +1,6 @@
 package com.filmecinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -30,10 +31,15 @@ public class Sessao implements Serializable {
     @NotEmpty(message = "Horário de término não pode estar vazio ou nulo")
     private String horarioTermino;
 
+    @ManyToOne
+    @JoinColumn(name = "filme_id_filme")
+    @JsonIgnore
+    private Filme filme;
+
     @Max(value = 32)
     @OneToMany(mappedBy = "sessao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Assento> assentos = new ArrayList<>();
-
+}
 //    @ElementCollection
 //    @Max(value = 32)
 //    @CollectionTable(name = "filme_assentos_disponiveis", joinColumns = @JoinColumn(name = "filme_codigo"))
@@ -55,7 +61,6 @@ public class Sessao implements Serializable {
 //            }
 //        }
 //
-    }
 
 
 //    private Set<Integer> gerarAssentos() {

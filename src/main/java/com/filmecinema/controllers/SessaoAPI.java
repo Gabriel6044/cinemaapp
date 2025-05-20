@@ -14,38 +14,38 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/filmes")
-public class SessaoController {
+@RequestMapping("/filmes/{codigo}/sessao")
+public class SessaoAPI {
 
     private final FilmeService filmeService;
     private final SessaoService sessaoService;
 
     @Autowired
-    public SessaoController(FilmeService filmeService, SessaoService sessaoService) {
+    public SessaoAPI(FilmeService filmeService, SessaoService sessaoService) {
         this.filmeService = filmeService;
         this.sessaoService = sessaoService;
     }
 
 
-    @PostMapping(value = "/{codigo}/sessao")
+    @PostMapping
     public ResponseEntity<Filme> newSessao(@PathVariable("codigo") long codigo, @RequestBody @Valid Sessao sessao) {
         return ResponseEntity.ok(this.filmeService.newSessao(codigo, sessao));
     }
 
-    @DeleteMapping(value = "/{codigo}/sessao/{idSessao}/delete")
-    public ResponseEntity<String> deleteSessao(@PathVariable("idSessao") long idSessao, @PathVariable String codigo) {
+    @DeleteMapping(value = "/{idSessao}/delete")
+    public ResponseEntity<String> deleteSessao(@PathVariable("idSessao") long idSessao, @PathVariable long codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
-        sessaoService.delete(sessao);
+        sessaoService.delete(sessao, codigo);
         return ResponseEntity.ok("Sessão deletada com sucesso");
     }
 
-    @GetMapping(value = "/{codigo}/sessao/{idSessao}")
-    public ResponseEntity getSessaoByCode(@PathVariable("idSessao") long idSessao, @PathVariable String codigo) {
+    @GetMapping(value = "/{idSessao}")
+    public ResponseEntity getSessaoByCode(@PathVariable("idSessao") long idSessao, @PathVariable long codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         return ResponseEntity.ok(sessao);
     }
 
-    @PatchMapping(value = "/{codigo}/sessao/{idSessao}")
+    @PatchMapping(value = "/{idSessao}")
     public ResponseEntity patchSessaoByCode(@PathVariable("idSessao") long idSessao, @RequestBody Map<String, Object> updates, BindingResult result, @PathVariable String codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         updates.forEach((key, value) -> {

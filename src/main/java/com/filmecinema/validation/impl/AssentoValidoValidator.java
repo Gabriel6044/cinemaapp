@@ -12,7 +12,7 @@ public class AssentoValidoValidator implements ConstraintValidator<AssentoValido
         if (assento == null) return true;
 
         int fileira = assento.getFileira();
-        int numero = assento.getNumero();
+        int numero = assento.getNumeroAssento();
 
         int min = (fileira - 1) * 8 + 1;
         int max = fileira * 8;
