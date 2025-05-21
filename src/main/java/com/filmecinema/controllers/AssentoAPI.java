@@ -23,18 +23,18 @@ public class AssentoAPI {
     }
 
     @PostMapping(value = "/assento/{numeroAssento}/comprar")
-    public ResponseEntity<String> buyAssento(@PathVariable("idSessao") long idSessao, @PathVariable("numeroAssento") int numeroAssento) {
-        Assento assento = assentoService.findByNumeroAssento(numeroAssento);
+    public ResponseEntity<String> buyAssento(@PathVariable("idSessao") Long idSessao, @PathVariable("numeroAssento") int numeroAssento) {
+        Assento assento = assentoService.findNumeroAssentoBySessao(idSessao, numeroAssento);
         sessaoService.buyAssento(idSessao, assento);
         return ResponseEntity.ok("Assento " + numeroAssento + " comprado com sucesso.");
     }
 
     @DeleteMapping(value = "/assento/{numeroAssento}/delete")
-    public ResponseEntity<String> deleteAssento(@PathVariable("numeroAssento") int numeroAssento, @PathVariable("idSessao") long idSessao, @PathVariable String codigo) {
+    public ResponseEntity<String> deleteAssento(@PathVariable("numeroAssento") int numeroAssento, @PathVariable("idSessao") Long idSessao, @PathVariable String codigo) {
         Assento assento = assentoService.findByNumeroAssento(numeroAssento);
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         assentoService.delete(assento, sessao);
-        return ResponseEntity.ok("Assento deletado com sucesso");
+        return ResponseEntity.ok("Assento desocupado com sucesso");
     }
 
     @GetMapping(value = "/assento/{numeroAssento}")
@@ -42,4 +42,12 @@ public class AssentoAPI {
         Assento assento = assentoService.findByNumeroAssento(numeroAssento);
         return ResponseEntity.ok(assento);
     }
+
+    @GetMapping(value = "/assento/disponivel")
+    public ResponseEntity<Iterable<Assento>> listaAssentosDisponiveis(@PathVariable("idSessao") Long idSessao) {
+        Iterable<Assento> assentos = assentoService.findDisponivelBySessao(idSessao, true);
+
+        return ResponseEntity.ok(assentos);
+    }
+
 }

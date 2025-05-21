@@ -26,7 +26,7 @@ public class FilmeService {
     }
 
     @Transactional
-    public Filme findByCodigo(long codigo) {
+    public Filme findByCodigo(Long codigo) {
         return this.filmeRepository.findByCodigo(codigo).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado"));
     }
 
@@ -38,7 +38,7 @@ public class FilmeService {
     @Transactional
     public Filme save(Filme filme, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao salvar filme");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao salvar filme, verifique os campos!");
         }
         return this.filmeRepository.save(filme);
     }
@@ -55,9 +55,9 @@ public class FilmeService {
     }
 
     @Transactional
-    public Filme newSessao(long codigo, Sessao sessao) {
+    public Filme newSessao(Long codigo, Sessao sessao) {
         Filme filme = this.findByCodigo(codigo);
-        List<Assento> assentos = new ArrayList<>();
+        List<Assento> assentosList = new ArrayList<>();
         int numero = 1;
 
         for (int fileira = 1; fileira <= 4; fileira++) {
@@ -65,36 +65,15 @@ public class FilmeService {
                 Assento assento = new Assento();
                 assento.setFileira(fileira);
                 assento.setNumeroAssento(numero++);
-                assento.setDisponivel(true);
                 assento.setSessao(sessao);
-                assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira()) + assento.getNumeroAssento()));
-                assentos.add(assento);
+//                assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira()) + assento.getNumeroAssento()));
+                assentosList.add(assento);
             }
         }
 
-        sessao.setAssentos(assentos);
+        sessao.setAssentos(assentosList);
         filme.addSessao(sessao);
         return this.filmeRepository.save(filme);
     }
 
-
-//    @Transactional
-//    public void startSessao(Sessao sessao) {
-//        List<Assento> assentos = new ArrayList<>();
-//        int numero = 1;
-//        for (int fileira = 1; fileira <= 4; fileira++) {
-//            for (int i = 1; i <= 8; i++) {
-//                Assento assento = new Assento();
-//                assento.setFileira(fileira);
-//                assento.setNumero(numero++);
-//                assento.setDisponivel(true);
-//                assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira()) + assento.getNumero()));
-//                assento.setSessao(sessao.getIdSessao());
-//                assentos.add(assento);
-//
-//            }
-//        }
-//        sessao.setAssentos(assentos);
-//        sessaoRepository.save(sessao);
-//    }
 }

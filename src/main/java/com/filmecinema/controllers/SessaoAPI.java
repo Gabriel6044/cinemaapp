@@ -28,25 +28,25 @@ public class SessaoAPI {
 
 
     @PostMapping
-    public ResponseEntity<Filme> newSessao(@PathVariable("codigo") long codigo, @RequestBody @Valid Sessao sessao) {
+    public ResponseEntity<Filme> newSessao(@PathVariable("codigo") Long codigo, @RequestBody @Valid Sessao sessao) {
         return ResponseEntity.ok(this.filmeService.newSessao(codigo, sessao));
     }
 
     @DeleteMapping(value = "/{idSessao}/delete")
-    public ResponseEntity<String> deleteSessao(@PathVariable("idSessao") long idSessao, @PathVariable long codigo) {
+    public ResponseEntity<String> deleteSessao(@PathVariable("idSessao") Long idSessao, @PathVariable Long codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         sessaoService.delete(sessao, codigo);
         return ResponseEntity.ok("Sessão deletada com sucesso");
     }
 
     @GetMapping(value = "/{idSessao}")
-    public ResponseEntity getSessaoByCode(@PathVariable("idSessao") long idSessao, @PathVariable long codigo) {
+    public ResponseEntity getSessaoByCode(@PathVariable("idSessao") Long idSessao, @PathVariable Long codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         return ResponseEntity.ok(sessao);
     }
 
     @PatchMapping(value = "/{idSessao}")
-    public ResponseEntity patchSessaoByCode(@PathVariable("idSessao") long idSessao, @RequestBody Map<String, Object> updates, BindingResult result, @PathVariable String codigo) {
+    public ResponseEntity patchSessaoByCode(@PathVariable("idSessao") Long idSessao, @RequestBody Map<String, Object> updates, BindingResult result, @PathVariable String codigo) {
         Sessao sessao = sessaoService.findByidSessao(idSessao);
         updates.forEach((key, value) -> {
             switch (key) {

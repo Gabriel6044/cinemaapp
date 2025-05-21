@@ -25,7 +25,7 @@ public class Sessao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long idSessao;
+    private Long idSessao;
     @NotEmpty(message = "Horário de início não pode estar vazio ou nulo")
     private String horarioInicio;
     @NotEmpty(message = "Horário de término não pode estar vazio ou nulo")

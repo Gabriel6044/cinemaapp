@@ -23,7 +23,7 @@ public class SessaoService {
     }
 
     @Transactional
-    public Sessao findByidSessao(long idSessao) {
+    public Sessao findByidSessao(Long idSessao) {
         return this.sessaoRepository.findByIdSessao(idSessao).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Sessão não encontrada"));
     }
@@ -43,25 +43,21 @@ public class SessaoService {
     }
 
     @Transactional
-    public Filme findByCodigo(long codigo) {
+    public Filme findByCodigo(Long codigo) {
         return this.filmeRepository.findByCodigo(codigo).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado"));
     }
 
 
     @Transactional
-    public void delete(Sessao sessao, long codigo) {
+    public void delete(Sessao sessao, Long codigo) {
         Filme filme = this.findByCodigo(codigo);
         filme.getSessaoList().remove(sessao);
         this.sessaoRepository.delete(sessao);
     }
 
     @Transactional
-    public Sessao buyAssento(long idSessao, Assento assento) {
+    public Sessao buyAssento(Long idSessao, Assento assento) {
         Sessao sessao = this.findByidSessao(idSessao);
-//        Assento assento = sessao.getAssentos().stream()
-//                .filter(a -> a.getNumeroAssento() == numeroAssento)
-//                .findFirst()
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assento não encontrado"));
         if (assento.isDisponivel() == true) {
             assento.setDisponivel(false);
         } else {
