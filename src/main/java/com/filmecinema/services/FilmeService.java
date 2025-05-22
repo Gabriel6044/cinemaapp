@@ -32,6 +32,11 @@ public class FilmeService {
         return this.filmeRepository.findAll();
     }
 
+    public List<Filme> findByEstaEmCartaz(boolean estaEmCartaz) {
+        return this.filmeRepository
+                .findByEstaEmCartaz(estaEmCartaz);
+    }
+
     @Transactional
     public Filme save(Filme filme, BindingResult result) {
         if (result.hasErrors()) {

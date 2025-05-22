@@ -22,4 +22,7 @@ public class Assento {
     @JoinColumn(name = "sessao_id_sessao")
     @JsonIgnore
     private Sessao sessao;
+
+    @ManyToOne
+    private Pessoa ocupante;
 }
