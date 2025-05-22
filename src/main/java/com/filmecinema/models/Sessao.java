@@ -1,6 +1,7 @@
 package com.filmecinema.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.filmecinema.validation.ValidTimeRange;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ValidTimeRange
 public class Sessao implements Serializable {
 
     @Serial
