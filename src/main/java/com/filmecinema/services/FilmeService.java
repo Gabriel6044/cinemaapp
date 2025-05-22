@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,16 +33,18 @@ public class FilmeService {
         return this.filmeRepository.findAll();
     }
 
-    public List<Filme> findByEstaEmCartaz(boolean estaEmCartaz) {
+    public List<Filme> findByEmCartaz(Boolean EmCartaz) {
         return this.filmeRepository
-                .findByEstaEmCartaz(estaEmCartaz);
+                .findByEmCartaz(EmCartaz);
     }
 
     @Transactional
     public Filme save(Filme filme, BindingResult result) {
+        LocalDate hoje = LocalDate.now();
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao salvar filme, verifique os campos!");
-        }
+        } else filme.setEmCartaz(!hoje.isBefore(filme.getDataInicio()) && !hoje.isAfter(filme.getDataTermino()));
+
         return this.filmeRepository.save(filme);
     }
 

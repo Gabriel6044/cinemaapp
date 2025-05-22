@@ -37,9 +37,7 @@ public class Filme implements Serializable {
     @NotNull(message = "Data de término não pode estar vazio ou nulo")
     @Column(name = "data_termino")
     private LocalDate dataTermino;
-    private boolean estaEmCartaz(LocalDate hoje) {
-        return !hoje.isBefore(dataInicio) && !hoje.isAfter(dataTermino);
-    }
+    private Boolean emCartaz;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sessao> sessaoList = new ArrayList<>();
@@ -47,5 +45,7 @@ public class Filme implements Serializable {
     public void addSessao(Sessao sessao) {
         sessaoList.add(sessao);
     }
+
+
 
 }

@@ -43,7 +43,7 @@ public class AssentoAPI {
         return ResponseEntity.ok(assento);
     }
 
-    @GetMapping(value = "/assento/disponivel")
+    @GetMapping(value = "/assento-livre")
     public ResponseEntity<Iterable<Assento>> listaAssentosDisponiveis(@PathVariable("idSessao") Long idSessao) {
         Iterable<Assento> assentos = assentoService.findDisponivelBySessao(idSessao, true);
 

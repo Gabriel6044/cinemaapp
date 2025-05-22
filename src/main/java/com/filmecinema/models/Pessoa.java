@@ -17,7 +17,7 @@ public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idPessoa;
 
     @NotBlank(message = "Nome não pode estar vazio")
     private String nome;

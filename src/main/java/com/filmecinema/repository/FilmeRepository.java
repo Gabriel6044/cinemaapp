@@ -1,6 +1,5 @@
 package com.filmecinema.repository;
 
-import com.filmecinema.models.Assento;
 import com.filmecinema.models.Filme;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface FilmeRepository extends JpaRepository<Filme, Long> {
     Optional<Filme> findByCodigo(Long codigo);
-    List<Filme> find(boolean estaEmCartaz);
+    List<Filme> findByEmCartaz(Boolean emCartaz);
 }

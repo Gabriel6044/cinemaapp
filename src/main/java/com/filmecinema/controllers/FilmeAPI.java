@@ -47,7 +47,7 @@ public class FilmeAPI {
 
     @GetMapping(value = "/cartaz")
     public ResponseEntity<Iterable<Filme>> listaFilmeCartaz() {
-        Iterable<Filme> filmes = filmeService.findByEstaEmCartaz(true);
+        Iterable<Filme> filmes = filmeService.findByEmCartaz(true);
         return ResponseEntity.ok(filmes);
     }
 
