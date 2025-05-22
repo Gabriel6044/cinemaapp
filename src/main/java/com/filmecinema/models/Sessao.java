@@ -3,6 +3,7 @@ package com.filmecinema.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,9 +11,8 @@ import lombok.Setter;
 import javax.validation.constraints.Max;
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Entity
 @Getter
@@ -26,10 +26,10 @@ public class Sessao implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idSessao;
-    @NotEmpty(message = "Horário de início não pode estar vazio ou nulo")
-    private String horarioInicio;
-    @NotEmpty(message = "Horário de término não pode estar vazio ou nulo")
-    private String horarioTermino;
+    @NotNull(message = "Horário de início não pode estar vazio ou nulo")
+    private LocalTime horarioInicio;
+    @NotNull(message = "Horário de término não pode estar vazio ou nulo")
+    private LocalTime horarioTermino;
 
     @ManyToOne
     @JoinColumn(name = "filme_id_filme")

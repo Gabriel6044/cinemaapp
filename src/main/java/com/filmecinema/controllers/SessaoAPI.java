@@ -5,12 +5,14 @@ import com.filmecinema.models.Sessao;
 import com.filmecinema.services.FilmeService;
 import com.filmecinema.services.SessaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalTime;
 import java.util.Map;
 
 @Controller
@@ -51,10 +53,10 @@ public class SessaoAPI {
         updates.forEach((key, value) -> {
             switch (key) {
                 case "horarioInicio":
-                    sessao.setHorarioInicio((String) value);
+                    sessao.setHorarioInicio((LocalTime) value);
                     break;
                 case "horarioTermino":
-                    sessao.setHorarioTermino((String) value);
+                    sessao.setHorarioTermino((LocalTime) value);
                     break;
             }
         });
