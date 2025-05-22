@@ -4,7 +4,6 @@ import com.filmecinema.models.Assento;
 import com.filmecinema.models.Filme;
 import com.filmecinema.models.Sessao;
 import com.filmecinema.repository.FilmeRepository;
-import com.filmecinema.repository.SessaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,11 +17,9 @@ import java.util.List;
 public class FilmeService {
 
     private final FilmeRepository filmeRepository;
-    private final SessaoRepository sessaoRepository;
 
-    public FilmeService(FilmeRepository filmeRepository, SessaoRepository sessaoRepository) {
+    public FilmeService(FilmeRepository filmeRepository) {
         this.filmeRepository = filmeRepository;
-        this.sessaoRepository = sessaoRepository;
     }
 
     @Transactional
@@ -66,7 +63,6 @@ public class FilmeService {
                 assento.setFileira(fileira);
                 assento.setNumeroAssento(numero++);
                 assento.setSessao(sessao);
-//                assento.setIdAssento(Integer.parseInt(String.valueOf(assento.getFileira()) + assento.getNumeroAssento()));
                 assentosList.add(assento);
             }
         }

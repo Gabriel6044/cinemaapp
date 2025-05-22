@@ -3,7 +3,6 @@ package com.filmecinema.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.filmecinema.validation.ValidTimeRange;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,43 +41,3 @@ public class Sessao implements Serializable {
     @OneToMany(mappedBy = "sessao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Assento> assentos = new ArrayList<>();
 }
-//    @ElementCollection
-//    @Max(value = 32)
-//    @CollectionTable(name = "filme_assentos_disponiveis", joinColumns = @JoinColumn(name = "filme_codigo"))
-//    private Set<Integer> assentosDisponiveis = gerarAssentos();
-
-//    @PostPersist
-//    public void inicializarAssentos() {
-//        if (assentos.isEmpty()) {
-//            int numero = 1;
-//            for (int fileira = 1; fileira <= 4; fileira++) {
-//                for (int i = 1; i <= 8; i++) {
-//                    Assento assento = new Assento();
-//                    assento.setFileira(fileira);
-//                    assento.setNumero(numero++);
-//                    assento.setDisponivel(true);
-//                    assento.setSessao(getIdSessao());
-//                    assentos.add(assento);
-//                }
-//            }
-//        }
-//
-
-
-//    private Set<Integer> gerarAssentos() {
-//        return IntStream.rangeClosed(1, 32).boxed().collect(Collectors.toCollection(TreeSet::new));
-//    }
-
-//    public void addAssentoOcupado(Assento assento) {
-//        Objects.requireNonNull(assento, "Assento não pode ser nulo");
-//        assentos.add(assento);
-//    }
-
-//    public void removeAssentoDisponivel(int numeroAssento) {
-//        if (!assentosDisponiveis.remove(numeroAssento)) {
-//            throw new IllegalStateException("Assento já ocupado ou inválido");
-//        }
-//    }
-
-//    public void addAssentoDisponivel(int numeroAssento) {
-//        assentosDisponiveis.

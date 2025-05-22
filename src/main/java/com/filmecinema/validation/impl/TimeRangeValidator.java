@@ -15,6 +15,7 @@ public class TimeRangeValidator implements ConstraintValidator<ValidTimeRange, S
         if (sessao.getHorarioInicio() == (sessao.getHorarioTermino())) {
             return false;
         }
+
         return !sessao.getHorarioTermino().isBefore(sessao.getHorarioInicio());
     }
 }
