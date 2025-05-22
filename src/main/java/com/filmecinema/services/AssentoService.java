@@ -1,5 +1,6 @@
 package com.filmecinema.services;
 
+import com.filmecinema.models.Filme;
 import com.filmecinema.models.Sessao;
 import com.filmecinema.models.Assento;
 import com.filmecinema.repository.AssentoRepository;
@@ -7,8 +8,10 @@ import com.filmecinema.repository.SessaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -49,6 +52,16 @@ public class AssentoService {
     public Iterable<Assento> findAll() {
         return this.assentoRepository.findAll();
     }
+
+    @Transactional
+    public Assento save(Assento assento, BindingResult result) {
+        LocalDate hoje = LocalDate.now();
+        if (result.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao salvar assento, verifique os campos!");
+        }
+        return this.assentoRepository.save(assento);
+    }
+
 
     @Transactional
     public void delete(Assento assento, Sessao sessao) {

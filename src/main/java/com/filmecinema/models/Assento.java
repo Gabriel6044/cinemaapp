@@ -23,6 +23,11 @@ public class Assento {
     @JsonIgnore
     private Sessao sessao;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "pessoa_id")
     private Pessoa ocupante;
+
+//    public void addPessoa(Pessoa pessoa) {
+//        ocupante.setNome(pessoa.getNome());
+//    }
 }

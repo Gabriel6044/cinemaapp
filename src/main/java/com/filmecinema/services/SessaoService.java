@@ -2,6 +2,7 @@ package com.filmecinema.services;
 
 import com.filmecinema.models.Assento;
 import com.filmecinema.models.Filme;
+import com.filmecinema.models.Pessoa;
 import com.filmecinema.models.Sessao;
 import com.filmecinema.repository.FilmeRepository;
 import com.filmecinema.repository.SessaoRepository;
@@ -56,15 +57,18 @@ public class SessaoService {
     }
 
     @Transactional
-    public Sessao buyAssento(Long idSessao, Assento assento) {
+    public void buyAssento(Long idSessao, Assento assento, String nome) {
         Sessao sessao = this.findByidSessao(idSessao);
-        if (assento.isDisponivel() == true) {
+        if (assento.isDisponivel()) {
+            Pessoa pessoa = new Pessoa();
+            pessoa.setNome(nome);
             assento.setDisponivel(false);
+            assento.setOcupante(pessoa);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assento já reservado");
         }
 
-        return this.sessaoRepository.save(sessao);
+        this.sessaoRepository.save(sessao);
     }
 }
 

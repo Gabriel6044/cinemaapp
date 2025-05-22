@@ -1,7 +1,9 @@
 package com.filmecinema.controllers;
 
+import com.filmecinema.dtos.CompraDTO;
 import com.filmecinema.models.Assento;
 import com.filmecinema.models.Sessao;
+import com.filmecinema.repository.PessoaRepository;
 import com.filmecinema.services.AssentoService;
 import com.filmecinema.services.SessaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +22,6 @@ public class AssentoAPI {
     public AssentoAPI(SessaoService sessaoService, AssentoService assentoService) {
         this.sessaoService = sessaoService;
         this.assentoService = assentoService;
-    }
-
-    @PostMapping(value = "/assento/{numeroAssento}/comprar")
-    public ResponseEntity<String> buyAssento(@PathVariable("idSessao") Long idSessao, @PathVariable("numeroAssento") int numeroAssento) {
-        Assento assento = assentoService.findNumeroAssentoBySessao(idSessao, numeroAssento);
-        sessaoService.buyAssento(idSessao, assento);
-        return ResponseEntity.ok("Assento " + numeroAssento + " comprado com sucesso.");
     }
 
     @DeleteMapping(value = "/assento/{numeroAssento}/delete")
